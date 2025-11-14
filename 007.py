@@ -1,5 +1,3 @@
-# TODO-1
-
 import random
 
 word_list = ["aardvark", "baboon", "camel"]
@@ -11,26 +9,32 @@ placeholder = ""
 for letter in chosen_word:
     placeholder += "_"
 
-# TODO-2
+print(placeholder)
 
-guess = input("Guess a letter:").lower()
+game_over = False
 
-# TODO-3
+correct_guesses = []
 
-display = ""
+while not game_over:
 
-left_lives = 5
+    guess = input("Guess a letter: ").lower()
 
+    display = ""
 
-while left_lives > 0:
-    
     for letter in chosen_word: 
+
         if letter == guess: 
             display += letter
-        elif letter != guess and letter != "_":
-            display = display
+            correct_guesses.append(guess)
+
+        elif letter in correct_guesses:
+                display += letter
+
         else:
             display += "_"
-            left_lives -= 1
 
-print(display)
+    print(display)
+    
+    if "_" not in display:
+        game_over = True
+        print("You win!")
