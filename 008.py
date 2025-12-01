@@ -82,15 +82,9 @@
 
 # calculate_love_score("Anne", "Bob")
 
-def encrypt(original_text, shift_amount):
+def encrypt(text, shift):
 
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
-    # direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
-
-    text = original_text.lower()
-
-    shift = int(shift_amount)
 
     new_text_list = []
 
@@ -103,12 +97,67 @@ def encrypt(original_text, shift_amount):
 
             letter_location = alphabet.index(letter)
 
-            new_letter = alphabet[letter_location + shift]
+            if letter_location + shift > 25:
 
+                new_letter = alphabet[(letter_location + shift) - 26]
+
+            else:
+                new_letter = alphabet[letter_location + shift]
+                
             new_text_list.append(new_letter)
 
     new_text = ''.join(new_text_list)
 
     print(new_text)
 
-encrypt("hello anne", 1)
+def decrypt(text, shift):
+
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+    new_text_list = []
+
+    for letter in text:
+
+        if letter not in alphabet:
+            new_text_list.append(letter)
+
+        else:
+
+            letter_location = alphabet.index(letter)
+
+            if letter_location - shift < 0:
+
+                new_letter = alphabet[26 + (letter_location - shift)]
+
+            else:
+
+                new_letter = alphabet[letter_location - shift]
+
+            new_text_list.append(new_letter)
+
+    new_text = ''.join(new_text_list)
+
+    print(new_text)    
+
+def caesar(text, shift, direction):
+
+    if direction == "encode":
+        encrypt(text, shift)
+
+    elif direction == "decode":
+        decrypt(text, shift)
+
+    else:
+        print("Invalid direction. Please choose 'encode' or 'decode'.")
+
+while more == "yes":
+
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
+
+    text = input("Type your message:\n").lower()
+
+    shift = int(input("Type the shift number:\n"))
+
+    caesar(text, shift, direction)
+
+    more = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n").lower()  
